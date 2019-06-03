@@ -214,6 +214,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">REALIZAR PEDIDO</h3>
+              
+              <a href="PDF/rp_rutas.php">
+                <button type="submit" class="btn btn-info btn-sm" style="margin:3px; margin-left: 1.5%; font-size: 100%;" name="reporte" title="Rutas" ><span>Reporte Rutas <i class="fa fa-map" aria-hidden="true"></i>
+                </span></button>
+       </a>
+              
             </div>
           
           <form class="form-horizontal" method="POST" action="logica/Registropedido.php">
@@ -385,8 +391,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </div>
             </form>
           </div>
-      </section>
+        </button>
+            
+        
+        
+          
+          
+      </section> 
 
+     
+        
+      
 
             <?php 
       if(isset($_REQUEST["m"])){
