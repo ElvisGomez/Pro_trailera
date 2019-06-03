@@ -1,0 +1,49 @@
+*{
+	box-sizing: border-box;
+	 margin: 0;
+  padding: 0;
+}
+
+form{
+width: 500px;
+margin: auto;
+background: #ddd;
+padding: 20px;
+margin-top: 50px;
+color: black;
+border: 1px solid black;                                                                                                                                                                                                                                                                                                                                                   
+
+}
+
+h1{
+	text-align: center;
+	font-family: Calibri;
+}
+
+label, input{
+	margin: auto;
+	width: 25%;
+	display: block;
+	font-size: 1.1em;
+	font-family: Calibri;
+}
+
+
+input[type="text"]{
+	width: 50%;
+	margin: auto;
+}
+
+
+input[type="password"]{
+	width: 50%;
+	margin: auto;
+}
+
+
+input[type="submit"]{
+	width: 30%;
+	margin: auto;
+	cursor: pointer;
+	display: block;
+}
