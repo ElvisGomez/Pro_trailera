@@ -3,7 +3,7 @@ include ('logica/conexion.php');
 
 session_start();
 $usuarios=$_SESSION['username'];
-
+$rol=$_SESSION['rol'];
 if(!isset($usuarios)) 
 {
     echo '<script language=javascript>
@@ -169,7 +169,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li class=""><a href="autos.php"><i class="fa fa-car"></i> <span>Registro de flota Vehícular</span></a></li>
         
 
-    <li class="treeview">
+    <li class="treeview active ">
           <a href="#">
             <i class="fa fa-road"></i>
             <span>Registro de pedidos</span>
@@ -184,7 +184,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </li> 
 
 
-        <li class="treeview">
+        <li class="treeview" id="administracion">
           <a href="#">
             <i class="fa fa-gears"></i>
             <span>Administración</span>
@@ -215,13 +215,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="box-header with-border">
               <h3 class="box-title">REALIZAR PEDIDO</h3>
             </div>
-
+          
           <form class="form-horizontal" method="POST" action="logica/Registropedido.php">
               <div class="box-body">
                   
                   <div class="form-group">
                       <label class="col-sm-2 control-label" style="text-align:right;" hidden="true">ID Ruta</label>
-                  <div class="hidden col-sm-10"><input type="text" class="form-control" id="marca" name="marca" placeholder="Marca AUTOMOVIL"> </div>
+                  <div class="hidden col-sm-10"><input type="text" class="form-control" value="" id="id_ruta" name="id_ruta" placeholder="Id Ruta"> </div>
                 </div>
                   
               <div class="form-group">
@@ -237,14 +237,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <?php
                 foreach ($query as $vehiculo):
                     ?>
-                    <option value="<?php echo $vehiculo['id_Vehiculo'];?>">
+                    <option name="id_vehiculo" value="<?php echo $vehiculo['id_Vehiculo'];?>">
                         <?php 
                         echo $vehiculo['marca'];
                         echo " ";
                         echo $vehiculo['modelo'];
                         ?>
-                          
-
                         </option>
                   <?php
                   endforeach
@@ -278,7 +276,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 
                 <div class="form-group">
                 <label class="col-sm-2 control-label" style="text-align:right;">Confimar Dirección</label>                
-                <select class="form-control " style="width: 81%; margin: auto;" tabindex="1" aria-hidden="true" onchange="myDir();" id="select">
+                <select class="form-control " style="width: 81%; margin: auto;" tabindex="1" aria-hidden="true" onchange="myDir();" id="select" name="client">
                     <option>Seleccionar</option>
                 <?php
                     $q = "SELECT * FROM cliente";
@@ -333,14 +331,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <div class="col-sm-10"><input readonly type="hidden" class="form-control" id="d_longi" name="d_longi" placeholder="Longitud destino"> </div>
                 </div>
 
-          
-
-
-
+         
                 <div class="form-group">
                   <label class="col-sm-2 control-label" style="text-align:right;">Fecha</label>
                   <div class="col-sm-10"><input type="date" class="form-control" id="fecha_ruta" name="fecha_ruta" > </div>
                 </div>
+              
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" style="text-align:right;">Distancia</label>
+                  <div class="col-sm-10"><input readonly type="" class="form-control" id="distancia" name="distancia" placeholder="Distancia"> </div>
+                </div>
+              
+              
+              <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label" style="text-align:right;">Producto</label>
+                  <div class="col-sm-10"><input type="text" class="form-control" name="producto" placeholder="Producto"> </div>
+                </div>
+              
+              
+              <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label" style="text-align:right;">Cantidad</label>
+                  <div class="col-sm-10"><input type="number" class="form-control" name="cantidad" placeholder="cantidad" step="500" min="20000" max="40000">
+                  <br>
+                      <div class="input-group-btn">
+                      
+                          <button type="button" class="btn btn-success" name="ruta" id="ruta" onclick="calcTotal();">Calcular Precio</button>
+              
+                        </div>
+                  </div>
+              </div>
+              
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" style="text-align:right;">Costo</label>
+                  <div class="col-sm-10"><input readonly type="" class="form-control" id="costo" name="costo" placeholder="costo"> </div>
+                </div>
+              
+              
+              
 
                <!--Lugar para mapa-->
         <div id="map" class="box fluid" style=" height: 55vh; width: 100%;align-content: center">
@@ -378,70 +405,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
 
       ?>
-
-
-
-
-
-
-
-
         <section class="content-header">
         
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-            <h3 class="box-title">REGISTROS CLIENTES &nbsp;&nbsp;<a href="clientes.php"><button class="btn btn-warning" style="margin-right: auto;">REGRESAR A CLIENTES</button></a></h3>
-            <div>
-           
-            </div>
-            <div class="box-tools">
-            </div>
-            </div>
-            
-
-
-           <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tbody><tr>
-                  <th>ID</th>
-                  <th>Nombre</th>
-                  <th>Dirección</th>
-                  <th>Latitud</th>                  
-                  <th>Longitud</th>
-                  <th>Correo</th>
-                  <th>Teléfono</th>
-
-                </tr>
-
-          <?php
-          include 'logica/conexion.php';
-
-          $q = "SELECT id_Cliente,nombre_Cliente,direccion_Cliente,lat_Cliente,Long_Cliente,email_Cliente,telefono_Cliente FROM cliente";
-          $query = mysqli_query($conexion,$q);
-
-          while($res = mysqli_fetch_array($query)){
-          ?>
-           <tr>
-                  <td><?php echo $res['id_Cliente']; ?></td>
-                  <td><?php echo $res['nombre_Cliente']; ?></td>
-                  <td><?php echo $res['direccion_Cliente']; ?></td>
-                  <td><?php echo $res['lat_Cliente']; ?></td>
-                  <td><?php echo $res['Long_Cliente']; ?></td>
-                  <td><?php echo $res['email_Cliente']; ?></td>
-                  <td><?php echo $res['telefono_Cliente']; ?></td>
-                  <td>
-                </td>
-                </tr>
-        <?php 
-          }
-        ?>
-              </tbody></table>
-            </div>
-            </div> 
-        </div>
-       </div>
       
     <section class="content container-fluid"></section>
     </section>
@@ -470,6 +435,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
      user experience. 
  -->
 
+ <script>
+     function ocultar(){
+        document.getElementById("administracion").hidden="true";
+    }
+    <?php
+            if ($rol==2 || $rol==3 || $rol!=1) {?>
+                ocultar();
+            <?php }
+    ?>
+ </script>
 <script>
 function validarNum(e){
 		//para mandarlo a llamar lo haces desde un atributo onkeypress="return validarNum(event);"
@@ -831,6 +806,8 @@ function addWaypointsToPanel(waypoints){
  */
 function addSummaryToPanel(summary){
   distancia = summary.distance;
+  document.getElementById("distancia").value=distancia;
+console.log(distancia);
   var summaryDiv = document.createElement('div'),
    content = '';
    content += '<b>Distancia Total</b>: ' + distancia  + 'm. <br/>';
@@ -885,11 +862,19 @@ Number.prototype.toMMSS = function () {
   return  tiempo;
 }
 
-
 // Finalmente se usa la función calcular ruta para plantear todo el código anterior
 calculateRouteFromAtoB (platform);
 }
 /*Termina*/
 </script>
+ <script>
+ function calcTotal(){
+    var IVA=0.13;
+    var pKm=2.00;
+    var subTotal=(((distancia)/100) * pKm);    
+    var totalP=subTotal+(subTotal*IVA);
+    document.getElementById("costo").value=totalP;
+}
+ </script>
 </body>
 </html>

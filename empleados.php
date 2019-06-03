@@ -3,6 +3,7 @@ include ('logica/conexion.php');
 
 session_start();
 $usuarios=$_SESSION['username'];
+$rol=$_SESSION['rol'];
 
 if(!isset($usuarios)) 
 {
@@ -190,7 +191,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <li class=""><a href="rutas.php"><i class="fa fa-road"></i><span>Registro de pedidos</span></a></li>
        
 
-          <li class="treeview">
+          <li class="treeview" id="administracion">
           <a href="#">
             <i class="fa fa-gears"></i>
             <span>Administración</span>
@@ -522,6 +523,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <!-- page script -->
+<script>
+     function ocultar(){
+        document.getElementById("administracion").hidden="true";
+    }
+    <?php
+            if ($rol==2 || $rol==3 || $rol!=1) {?>
+                ocultar();
+            <?php }
+    ?>
+ </script>
 <script>
   $(function () {
     $('#example1').DataTable()

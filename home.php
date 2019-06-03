@@ -3,6 +3,7 @@ include ('logica/conexion.php');
 
 session_start();
 $usuarios=$_SESSION['username'];
+$rol=$_SESSION['rol'];
 
 if(!isset($usuarios)) 
 {
@@ -122,12 +123,14 @@ if(!isset($usuarios))
             
            include 'logica/conexion.php';
 
-          $q = "SELECT nombre FROM usuario";
+          $q = "SELECT nombre FROM usuario";   
           $query = mysqli_query($conexion,$q);
           $res = mysqli_fetch_array($query);
+     
 
-            echo " ";
+           echo " ";
            echo $res['nombre'];
+        
 
 
            ?>
@@ -145,11 +148,11 @@ if(!isset($usuarios))
         <li class=""><a href="../Pro_trailera/clientes.php"><i class="fa fa-user"></i><span>Registro de cliente</span></a></li>
         <li class=""><a href="../Pro_trailera/empleados.php"><i class="fa fa-male"></i><span>Registro de motoristas</span></a></li>
         <li class=""><a href="../Pro_trailera/autos.php"><i class="fa fa-car"></i><span>Registro de flota Vehícular</span></a></li>
-        <li class=""><a href="../Pro_trailera/rutas.php"><i class="fa fa-road"></i><span>PEDIDOS</span></a></li>
+        <li class=""><a href="../Pro_trailera/rutas.php"><i class="fa fa-road"></i><span>Registro de Pedidos</span></a></li>
 		    
 
 
-    <li class="treeview">
+        <li class="treeview" id="administracion">
           <a href="#">
             <i class="fa fa-gears"></i>
             <span>Administración</span>
@@ -250,7 +253,7 @@ if(!isset($usuarios))
 
             <div class="box-footer box-comments">
               <div class="box-comment">
-                <img class="img-circle img-sm" src="../Pro_trailera/dist/img/user3-128x128.jpg" alt="User Image">
+                <img class="img-circle img-sm" src="../Pro_trailera/dist/img/user7-128x128.jpg" alt="User Image">
 
                 
               </div>
@@ -284,7 +287,7 @@ if(!isset($usuarios))
               
             <div class="box-footer box-comments">
               <div class="box-comment">
-                <img class="img-circle img-sm" src="../Pro_trailera/dist/img/user3-128x128.jpg" alt="User Image">
+                <img class="img-circle img-sm" src="../Pro_trailera/dist/img/user7-128x128.jpg" alt="User Image">
 
               
               </div>
@@ -324,7 +327,7 @@ if(!isset($usuarios))
 
             <div class="box-footer box-comments">
               <div class="box-comment">
-                <img class="img-circle img-sm" src="../Pro_trailera/dist/img/user3-128x128.jpg" alt="User Image">
+                <img class="img-circle img-sm" src="../Pro_trailera/dist/img/user7-128x128.jpg" alt="User Image">
 
              
               </div>
@@ -358,7 +361,7 @@ if(!isset($usuarios))
               
             <div class="box-footer box-comments">
               <div class="box-comment">
-                <img class="img-circle img-sm" src="../Pro_trailera/dist/img/user3-128x128.jpg" alt="User Image">
+                <img class="img-circle img-sm" src="../Pro_trailera/dist/img/user7-128x128.jpg" alt="User Image">
 
               </div>
               
@@ -393,4 +396,14 @@ if(!isset($usuarios))
 <script src="dist/js/adminlte.min.js"></script>
 
 </body>
+<script>
+    function ocultar(){
+        document.getElementById("administracion").hidden="true";
+    }
+    <?php
+            if ($rol==2 || $rol==3 || $rol!=1) {?>
+                ocultar();
+            <?php }
+    ?>
+</script>
 </html>

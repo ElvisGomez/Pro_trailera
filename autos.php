@@ -3,6 +3,8 @@ include ('logica/conexion.php');
 
 session_start();
 $usuarios=$_SESSION['username'];
+$rol=$_SESSION['rol'];
+
 
 if(!isset($usuarios)) 
 {
@@ -162,7 +164,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li class="active"><a href="#"><i class="fa fa-car"></i> <span>Registro de flota Vehícular</span></a></li>
         <li class=""><a href="rutas.php"><i class="fa fa-road"></i><span>Registro de pedidos</span></a></li>
 		
-         <li class="treeview">
+        <li class="treeview" id="administracion">
           <a href="#">
             <i class="fa fa-gears"></i>
             <span>Administración</span>
@@ -238,7 +240,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label" style="text-align:right;">Capacidad Carga</label>
                   <div class="col-sm-10"><input type="number" class="form-control" id="Carga" name="Carga" placeholder="Capacidad en Kilogramos" required 
-                    step="500" min="30000" max="40000"></div>
+                    step="500" min="20000" max="40000"></div>
                 </div>
 
 
@@ -455,7 +457,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div>
         </div>
       </div>
-    </div>
+    </div
+    <script>
+     function ocultar(){
+        document.getElementById("administracion").hidden="true";
+    }
+    <?php
+            if ($rol==2 || $rol==3 || $rol!=1) {?>
+                ocultar();
+            <?php }
+    ?>
+ </script>
+    
+    <script>
+     function ocultar(){
+        document.getElementById("administracion").hidden="true";
+    }
+    <?php
+            if ($rol==2 || $rol==3 || $rol!=1) {?>
+                ocultar();
+            <?php }
+    ?>
+ </script>
+    
+    
+    
 
     <script>
       function prueba(id){

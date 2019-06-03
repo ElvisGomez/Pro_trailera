@@ -383,7 +383,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th>NOMBRES</th>
                   <th>APELLIDOS</th>
                   <th>USUARIO</th>                  
-                  <th>CONTRASEÑA</th>
                   <th>CORREO</th>
                   <th>ID ROL</th>
                   <th>ACCIONES</th>
@@ -394,7 +393,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           include 'logica/conexion.php';
 
 
-          $q = "SELECT id_usuario,nombre,apellido,usuario,contrasena,correo,id_rol FROM usuario";
+          $q = "SELECT id_usuario,nombre,apellido,usuario,correo,id_rol FROM usuario";
           $query = mysqli_query($conexion,$q);
 
           while($res = mysqli_fetch_array($query)){
@@ -404,7 +403,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td><?php echo $res['nombre']; ?></td>
                   <td><?php echo $res['apellido']; ?></td>
                   <td><?php echo $res['usuario']; ?></td>
-                  <td><?php echo $res['contrasena']; ?></td>
                   <td><?php echo $res['correo']; ?></td>
                   <td><?php echo $res['id_rol']; ?></td>
                   <td>

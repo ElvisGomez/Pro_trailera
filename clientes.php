@@ -3,6 +3,7 @@ include ('logica/conexion.php');
 
 session_start();
 $usuarios=$_SESSION['username'];
+$rol=$_SESSION['rol'];
 
 if(!isset($usuarios)) 
 {
@@ -172,7 +173,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <li class=""><a href="empleados.php"><i class="fa fa-male"></i> <span>Registro de motoristas</span></a></li>
         <li class=""><a href="autos.php"><i class="fa fa-car"></i> <span>Registro de flota Vehícular</span></a></li>
         <li class=""><a href="rutas.php"><i class="fa fa-road"></i><span>Registro de pedidos</span></a></li>
-        <li class="treeview">
+        <li class="treeview" id="administracion">
           <a href="#">
             <i class="fa fa-gears"></i>
             <span>Administración</span>
@@ -441,7 +442,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- jQuery 3-->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="dist/js/adminlte.min.js"></script> 
+<script src="dist/js/adminlte.min.js"></script>
+<script>
+     function ocultar(){
+        document.getElementById("administracion").hidden="true";
+    }
+    <?php
+            if ($rol==2 || $rol==3 || $rol!=1) {?>
+                ocultar();
+            <?php }
+    ?>
+ </script>
 <script type="text/javascript">
 //Esta funcion servira, pone en nombreBotones los nombres de los botones separados por coma como se ve en el ejemplo de arriba
 function desactivar(name,nombreBotones){

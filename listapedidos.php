@@ -3,6 +3,7 @@ include ('logica/conexion.php');
 
 session_start();
 $usuarios=$_SESSION['username'];
+$rol=$_SESSION['rol'];
 
 if(!isset($usuarios)) 
 {
@@ -180,7 +181,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </li> 
        
 
-         <li class="treeview">
+        <li class="treeview" id="administracion">
           <a href="#">
             <i class="fa fa-gears"></i>
             <span>Administración</span>
@@ -236,12 +237,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                    <th>ID</th>
                   <th>VEHICULO</th>
                   <th>EMPRESA</th>
+                  <th>LUGAR SALIDA</th>
                   <th>LATITUD SALIDA</th>
                   <th>LONGITUD INICIO</th>
                   <th>LUGAR LLEGADA</th> 
                   <th>LATITUD FIN</th>
                   <th>LONGITUD FIN</th>
+                  <th>KILOMETRAJE</th>
                   <th>FECHA</th>
+                  <th>PRODUCTO</th>
+                  <th>CANTIDAD DE CARGA</th>
+                  <th>PRECIO</th>
+        
+                  
+                 
                   <th>ACCIONES</th>
 
                 </tr>
@@ -250,7 +259,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <?php
           include 'logica/conexion.php';
 
-          $q = "SELECT  id_Ruta,id_Vehiculo,id_Cliente,latitud_inicio,longitud_inicio,direccion_destino,latitud_fin,longitud_fin,fecha_pedido  FROM ruta";
+          $q = "SELECT  id_Ruta,id_Vehiculo,lugar_salida,id_Cliente,latitud_inicio,longitud_inicio,direccion_destino,latitud_fin,longitud_fin,kilometraje,fecha_pedido,producto,cantidad_carga,precio  FROM ruta";
           $query = mysqli_query($conexion,$q);
 
           while($res = mysqli_fetch_array($query)){
@@ -260,16 +269,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <td><?php echo $res['id_Ruta']; ?></td>
                   <td><?php echo $res['id_Vehiculo']; ?></td>
                   <td><?php echo $res['id_Cliente']; ?></td>
+                   <td><?php echo $res['lugar_salida']; ?></td>
                   <td><?php echo $res['latitud_inicio']; ?></td>
                   <td><?php echo $res['longitud_inicio']; ?></td>
                   <td><?php echo $res['direccion_destino']; ?></td>
                   <td><?php echo $res['latitud_fin']; ?></td>
                   <td><?php echo $res['longitud_fin']; ?></td>
+                  <td><?php echo $res['kilometraje']; ?></td> 
                   <td><?php echo $res['fecha_pedido']; ?></td>
+                  <td><?php echo $res['producto']; ?></td>
+                  <td><?php echo $res['cantidad_carga']; ?></td>
+                   <td><?php echo $res['precio']; ?></td>
+                 
                   <td>
-                    
+                      
+                      <a href=".php?id=<?php echo $res['id_Cliente']?>">   
+                  <button type="submit" class="btn btn-success btn-sm"  name="modificar" style="margin:3px;">
+                  <i class="fa fa-pencil" style="font-size:150%;"></i><h style="font-family: Arial"> Modificar</h></button>
+                   </a> 
+                      
+                  <a href="#" data-href="logica/Eliminarpedido.php?id=<?php echo $res['id_Ruta']?>" onclick="prueba(<?php echo $res['id_Ruta']?>)"> 
+                  <button type="submit" class="btn btn-danger btn-sm" name="eliminar" style="margin:3px;" ><i class="fa fa-trash-o" style="font-size: 150%;"></i><h style="font-family: Arial"> Eliminar</h></button></a>
+                  
+                      
+                      
+                      
                   </td>
-
+                  
+                  
           </tr>
          <?php 
           }
@@ -300,8 +327,49 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     
 
+    <script>
+     function ocultar(){
+        document.getElementById("administracion").hidden="true";
+    }
+    <?php
+            if ($rol==2 || $rol==3 || $rol!=1) {?>
+                ocultar();
+            <?php }
+    ?>
+ </script>
 
+ <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
 
+          <!--Encabezado del modal-->
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel" ><i class="fa fa-trash" style="color: #CB4335; font-size: 300%"></i></h4>
+          </div>
+
+          <!--Cuerpo del modal-->
+
+          <div class="modal-body">
+            <h2 class="modal-title">¿Desea eliminar este registro?</h2>
+           </div>
+          <!--Pie del modal-->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <a id="linkdelete" class="btn btn-danger btn-ok">Borrar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function prueba(id){
+        $('#confirm-delete').modal('show');
+        $('#linkdelete').attr('href', 'logica/Eliminarpedido.php?id='+ id);
+        
+      }
+    </script> 
+ 
 
 
 <!-- jQuery 3 -->
